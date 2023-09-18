@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block titulo %}Viajes{% endblock %}
+
+{% block contenido %}
+{% include 'menu.html'%}
+
+<h1>Bienvenido, {{session.usuario.nombre}}</h1>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <th>DESCRIPCION</th>
+        <th>Travel start date</th>
+        <th>Travel end date</th>
+        <th>Plan</th>
+        <th>Acciones</th>
+    </thead>
+    <tbody>
+        {% for viaje in viajes %}
+        {% if viaje.usuario_id == session.usuario.usuario_id %}
+        <tr>
+            <td>  
+                <a href="/viajes/{{viaje.id}}">{{viaje.nombre}}</a>
+            </td>
+            <td>
+                <a>{{viaje.travel_date_from}}</a>
+            </td>
+            <td><a>{{viaje.travel_date_to}}</a></td>
+            <td><a>{{viaje.descripcion}}</a></td>   
+            <td>
+                {% if viaje.usuario_id == session.usuario.usuario_id %}
+                <a href="/viajes/{{viaje.id}}/cancelar">cancelar</a>
+                {% endif %} 
+                {% if viaje.usuario_id == session.usuario.usuario_id or viaje.usuario_id != session.usuario.usuario_id %}
+                <a href="/viajes/{{viaje.id}}/eliminar">eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+
+
+
+</table>
+<h2>Other User's Travel Plans</h2>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <th>Name</th>
+        <th>Travel start date</th>
+        <th>Travel end date</th>
+        <th>DO YO WANT TO JOIN?</th>
+    </thead>
+    <tbody>
+        {% for viaje in viajes %}
+        {% if viaje.usuario_id != session.usuario.usuario_id %}
+        <tr>
+            <td>  
+                <a href="/viajes/{{viaje.id}}">{{viaje.nombre}}</a>
+            </td>
+            <td><a>{{viaje.travel_date_from}}</a></td>
+            <td><a>{{viaje.travel_date_to}}</a></td>
+            <td>
+                <form action="/viajes/{{viaje.id}}/join" method="POST">
+                    <button type="submit" class="btn btn-primary">JOIN</button>
+                </form>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block titulo %}Crear Viaje{% endblock %}
+
+{% block contenido %}
+{% include 'menu.html'%}
+
+<h1>Add a Job</h1>
+
+<form action="/procesar_viaje" method="post">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Destination</label>
+                <input type="text" required class="form-control" id="nombre" name="nombre">
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" name="descripcion"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="travel_date_from" class="form-label">Travel date from</label>
+                <input type="date" class="form-control" id="travel_date_from" name="travel_date_from">
+            </div>
+            <div class="mb-3">
+                <label for="travel_date_to" class="form-label">travel date to</label>
+                <input type="date" class="form-control" id="travel_date_to" name="travel_date_to">
+            </div>
+            <button type="submit" class="btn btn-success">SUBMIT</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
